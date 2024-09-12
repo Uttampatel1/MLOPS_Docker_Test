@@ -8,7 +8,7 @@ def index():
 
 @app.route('/test')
 def home():
-    return render_template('index.html')
+    return "Hello, World!"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5000)

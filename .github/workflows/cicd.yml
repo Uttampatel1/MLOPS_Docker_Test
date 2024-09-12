@@ -50,9 +50,14 @@ jobs:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
     
-        # - name: Build Docker image
-        #   run: |
-        #       docker buildx build --tag ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest --push .
+        - name: Build and push Docker image
+          id: build-and-publish
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            file: ./DockerFile
+            push: true
+            tags: ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
     
-        # - name: Log out from Docker Hub
-        #   run: docker logout
+        - name: Image digest
+          run: echo ${{ steps.build-and-publish.outputs.digest }}
